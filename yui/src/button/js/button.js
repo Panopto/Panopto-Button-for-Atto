@@ -47,13 +47,13 @@ var SELECTALIGN = 'float:left; display:none';
 var CSS = {
     INPUTSUBMIT: 'atto_media_urlentrysubmit',
 };
-    
+
 var TEMPLATE = '' +
     '<div id="{{elementid}}_{{innerform}}" class="mdl-align">' +
     '<iframe src="{{isource}}" id="{{iframeID}}" height="{{iframeheight}}" width="{{iframewidth}}" scrolling="auto"></iframe>' +
-		'<br><br>' +
+        '<br><br>' +
     '</div>' +
-	'<button class="{{CSS.INPUTSUBMIT}}" id="{{submitid}}" style="{{selectalign}}">{{get_string "insert" component}}</button>';
+    '<button class="{{CSS.INPUTSUBMIT}}" id="{{submitid}}" style="{{selectalign}}">{{get_string "insert" component}}</button>';
 
 Y.namespace('M.atto_panoptobutton').Button = Y.Base.create('button', Y.M.editor_atto.EditorPlugin, [], {
     /**
@@ -73,8 +73,8 @@ Y.namespace('M.atto_panoptobutton').Button = Y.Base.create('button', Y.M.editor_
         if (courseid) {
             idstring = '?folderId=' + courseid;
         }
-		
-		//set name of button icon to be loaded
+        
+        //set name of button icon to be loaded
         var icon = 'iconone';
 
         // Add the panoptobutton icon/buttons
@@ -105,7 +105,7 @@ Y.namespace('M.atto_panoptobutton').Button = Y.Base.create('button', Y.M.editor_
             focusAfterHide: clickedicon
 
         });
-		
+        
         //dialog doesn't detect changes in width without this
         //if you reuse the dialog, this seems necessary
         if (dialogue.width !== width + 'px') {
@@ -121,9 +121,9 @@ Y.namespace('M.atto_panoptobutton').Button = Y.Base.create('button', Y.M.editor_
         var bodycontent = Y.Node.create('<div></div>');
         bodycontent.append(buttonform);
 
-		
-		var defaultserver = this.get('defaultserver');
-		
+        
+        var defaultserver = this.get('defaultserver');
+        
         //Setup for message handling from iframe
         var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
         var eventEnter = window[eventMethod];
@@ -205,11 +205,11 @@ Y.namespace('M.atto_panoptobutton').Button = Y.Base.create('button', Y.M.editor_
         var messageEvent = eventMethod === "attachEvent" ? "onmessage" : "message";
 
         var parent = this;
-        
-		//Event triggered when response is received from server with object ids
-		eventEnter(messageEvent, function (e) {
-            var message = JSON.parse(e.data);           
-			var objectstring = "";
+
+        //Event triggered when response is received from server with object ids
+        eventEnter(messageEvent, function (e) {
+            var message = JSON.parse(e.data);
+            var objectstring = "";
 
             //Called when "Insert" is clicked. Creates HTML for embedding each selected video into the editor
             if (message.cmd === 'deliveryList') {
@@ -217,7 +217,7 @@ Y.namespace('M.atto_panoptobutton').Button = Y.Base.create('button', Y.M.editor_
 
                 for (var value in ids) {
                     objectstring += "<object type='text/html' data='http://" + servername + "/Panopto/Pages/Embed.aspx?id=" + ids[value] + "&v=1' width='450' height='300' frameborder='0'><br>";
-                } 
+                }
 
                 parent.editor.focus();
                 parent.get('host').insertContentAtFocusPoint(objectstring);
