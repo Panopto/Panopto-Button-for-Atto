@@ -26,7 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 
 /**
- * Initialise this plugin
+ * Initialize this plugin
  * @param string $elementid
  */
 function atto_panoptobutton_strings_for_js() {
