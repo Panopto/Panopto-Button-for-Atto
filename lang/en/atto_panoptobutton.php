@@ -23,8 +23,8 @@
  */
 
 $string['createpanoptobutton'] = 'Create panoptobutton';
-$string['pluginname'] = 'panoptobutton (Atto)';
-$string['settings'] = 'panoptobutton (Atto)';
+$string['pluginname'] = 'Panopto';
+$string['settings'] = 'Panopto';
 $string['browse'] = 'Browse';
 $string['visible'] = 'Visible';
 $string['dialogtitle'] = 'Insert from Panopto';
