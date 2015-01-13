@@ -35,7 +35,6 @@ function atto_panoptobutton_strings_for_js() {
 
     $PAGE->requires->strings_for_js(array('insert',
                                           'cancel',
-                                          'enterflavor',
                                           'dialogtitle'),
                                     'atto_panoptobutton');
 }
@@ -62,7 +61,7 @@ function atto_panoptobutton_params_for_js($elementid, $options, $fpoptions) {
     $usercontextid=context_user::instance($USER->id)->id;
     $disabled=false;
     
-    //config our array of data
+    //config array
     $params = array();
     $params['usercontextid'] = $usercontextid;
     $params['coursecontext'] = $panoptoid;
@@ -73,10 +72,10 @@ function atto_panoptobutton_params_for_js($elementid, $options, $fpoptions) {
             $disabled=true;
          }
         
-        //add our disabled param
+        //add disabled param
         $params['disabled'] = $disabled;
         
-        //add our default flavor
+        //add our default server
         $params['defaultserver'] = get_config('atto_panoptobutton','defaultserver');
 
     return $params;
