@@ -146,11 +146,11 @@ Y.namespace('M.atto_panoptobutton').Button = Y.Base.create('button', Y.M.editor_
         dialogue.set('bodyContent', bodycontent);
         var aservername = this.get('servename');
         if (aservername) {
-            document.getElementById('pageframe').src = 'http://' + aservername + '/Panopto/Pages/Sessions/EmbeddedUpload.aspx' + idstring;
+            document.getElementById('pageframe').src = 'https://' + aservername + '/Panopto/Pages/Sessions/EmbeddedUpload.aspx' + idstring;
             servername = aservername;
         }
         else {
-            document.getElementById('pageframe').src = 'http://' + defaultserver + '/Panopto/Pages/Sessions/EmbeddedUpload.aspx' +idstring;
+            document.getElementById('pageframe').src = 'https://' + defaultserver + '/Panopto/Pages/Sessions/EmbeddedUpload.aspx' +idstring;
             servername = defaultserver;
         }
         dialogue.show();
@@ -198,7 +198,7 @@ Y.namespace('M.atto_panoptobutton').Button = Y.Base.create('button', Y.M.editor_
 
         var win = document.getElementById("pageframe").contentWindow,
         message = { cmd: "createEmbeddedFrame" };
-        win.postMessage(JSON.stringify(message), 'http://' + servername);
+        win.postMessage(JSON.stringify(message), 'https://' + servername);
 
         var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
         var eventEnter = window[eventMethod];
@@ -216,7 +216,7 @@ Y.namespace('M.atto_panoptobutton').Button = Y.Base.create('button', Y.M.editor_
                 ids = message.ids;
 
                 for (var value in ids) {
-                    objectstring += "<object type='text/html' data='http://" + servername + "/Panopto/Pages/Embed.aspx?id=" + ids[value] + "&v=1' width='450' height='300' frameborder='0'><br>";
+                    objectstring += "<object type='text/html' data='https://" + servername + "/Panopto/Pages/Embed.aspx?id=" + ids[value] + "&v=1' width='450' height='300' frameborder='0'><br>";
                 }
 
                 parent.editor.focus();
