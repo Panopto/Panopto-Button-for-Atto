@@ -106,6 +106,7 @@ Y.namespace('M.atto_panoptobutton').Button = Y.Base.create('button', Y.M.editor_
 
         });
 
+        //When dialog becomes invisible, reset it. This fixes problems with multiple editors per page.
         dialogue.after("visibleChange", function(){
            var attributes = dialogue.getAttrs();
                if(attributes['visible'] == false)
@@ -233,7 +234,6 @@ Y.namespace('M.atto_panoptobutton').Button = Y.Base.create('button', Y.M.editor_
 
                 parent.editor.focus();
                 parent.get('host').insertContentAtFocusPoint(objectstring);
-
                 parent.markUpdated();
             }
         }, false);
