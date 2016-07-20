@@ -75,7 +75,7 @@ Y.namespace('M.atto_panoptobutton').Button = Y.Base.create('button', Y.M.editor_
         if (courseid) {
             idstring = '?folderId=' + courseid;
         }
-        
+
         //set name of button icon to be loaded
         var icon = 'iconone';
 
@@ -107,7 +107,18 @@ Y.namespace('M.atto_panoptobutton').Button = Y.Base.create('button', Y.M.editor_
             focusAfterHide: clickedicon
 
         });
-        
+
+        //When dialog becomes invisible, reset it. This fixes problems with multiple editors per page.
+        dialogue.after("visibleChange", function(){
+           var attributes = dialogue.getAttrs();
+           if(attributes['visible'] == false)
+           {
+              setTimeout(function(){
+                 dialogue.reset();
+              }, 5);
+           }
+        });
+
         //dialog doesn't detect changes in width without this
         //if you reuse the dialog, this seems necessary
         if (dialogue.width !== width + 'px') {
@@ -123,9 +134,9 @@ Y.namespace('M.atto_panoptobutton').Button = Y.Base.create('button', Y.M.editor_
         var bodycontent = Y.Node.create('<div></div>');
         bodycontent.append(buttonform);
 
-        
+
         var defaultserver = this.get('defaultserver');
-        
+
         //Setup for message handling from iframe
         var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
         var eventEnter = window[eventMethod];
@@ -155,7 +166,9 @@ Y.namespace('M.atto_panoptobutton').Button = Y.Base.create('button', Y.M.editor_
             document.getElementById('pageframe').src = 'https://' + defaultserver + '/Panopto/Pages/Sessions/EmbeddedUpload.aspx' +idstring;
             servername = defaultserver;
         }
+
         dialogue.show();
+
         this.markUpdated();
     },
 
@@ -248,5 +261,6 @@ Y.namespace('M.atto_panoptobutton').Button = Y.Base.create('button', Y.M.editor_
         }
     }
 });
+
 
 }, '@VERSION@', {"requires": ["moodle-editor_atto-plugin"]});

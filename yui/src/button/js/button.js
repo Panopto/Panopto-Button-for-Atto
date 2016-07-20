@@ -109,13 +109,13 @@ Y.namespace('M.atto_panoptobutton').Button = Y.Base.create('button', Y.M.editor_
         //When dialog becomes invisible, reset it. This fixes problems with multiple editors per page.
         dialogue.after("visibleChange", function(){
            var attributes = dialogue.getAttrs();
-               if(attributes['visible'] == false)
-               {
-                  setTimeout(function(){
-                     dialogue.reset();
-                  }, 5);
-               }
-            });
+           if(attributes['visible'] == false)
+           {
+              setTimeout(function(){
+                 dialogue.reset();
+              }, 5);
+           }
+        });
 
         //dialog doesn't detect changes in width without this
         //if you reuse the dialog, this seems necessary
