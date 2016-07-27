@@ -24,9 +24,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 20160072000;        // The current plugin version (Date: YYYYMMDDXX).
+$plugin->version   = 2016072700;        // The current plugin version (Date: YYYYMMDDXX).
 $plugin->requires  = 2013110500;        // Requires this Moodle version.
 $plugin->component = 'atto_panoptobutton';  // Full name of the plugin (used for diagnostics).
 $plugin->maturity  = MATURITY_BETA;
 // Human readable version informatiomn
-$plugin->release   = '1.0.0 (Build 2014042800)';
+$plugin->release   = '2016-07-27-00 release';
