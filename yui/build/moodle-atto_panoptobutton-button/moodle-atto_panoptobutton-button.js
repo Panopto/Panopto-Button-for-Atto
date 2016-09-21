@@ -33,6 +33,9 @@ YUI.add('moodle-atto_panoptobutton-button', function (Y, NAME) {
  * @extends M.editor_atto.EditorPlugin
  */
 
+// TODO: Use some helper to register one-shot event handling.
+// TODO: Use string format helper.
+ 
 var COMPONENTNAME = 'atto_panoptobutton';
 var LOGNAME = 'atto_panoptobutton';
 var servername = '';
@@ -220,23 +223,37 @@ Y.namespace('M.atto_panoptobutton').Button = Y.Base.create('button', Y.M.editor_
         var messageEvent = eventMethod === "attachEvent" ? "onmessage" : "message";
 
         var parent = this;
+        var eventFired = false;
 
         //Event triggered when response is received from server with object ids
         eventEnter(messageEvent, function (e) {
-            var message = JSON.parse(e.data);
-            var objectstring = "";
+            if (!eventFired)
+            {
+                var message = JSON.parse(e.data);
+                var objectstring = "";
 
-            //Called when "Insert" is clicked. Creates HTML for embedding each selected video into the editor
-            if (message.cmd === 'deliveryList') {
-                ids = message.ids;
+                //Called when "Insert" is clicked. Creates HTML for embedding each selected video into the editor
+                if (message.cmd === 'deliveryList') {
+                    ids = message.ids;
 
-                for (var value in ids) {
-                    objectstring += "<object type='text/html' data='https://" + servername + "/Panopto/Pages/Embed.aspx?id=" + ids[value] + "&v=1' width='450' height='300' frameborder='0'><br>";
+                    for (var value in ids) {
+                        objectstring +=
+                            "<object type='text/html' data='https://" + 
+                            servername + 
+                            "/Panopto/Pages/Embed.aspx?id=" +
+                            ids[value] +
+                            "&v=1' width='450' height='300' frameborder='0'></object><br>";
+                    }
+
+                    parent.editor.focus();
+                    parent.get('host').insertContentAtFocusPoint(objectstring);
+                    parent.markUpdated();
                 }
-
-                parent.editor.focus();
-                parent.get('host').insertContentAtFocusPoint(objectstring);
-                parent.markUpdated();
+                
+                // This plug-in instance has completed the job, but it's still alive until editor is closed.
+                // If another plug-in instance is created, the event is posted also this instance.
+                // We need to ignore such events.
+                eventFired = true;
             }
         }, false);
     }
