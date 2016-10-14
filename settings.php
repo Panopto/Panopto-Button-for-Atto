@@ -18,7 +18,7 @@
  * panoptobutton settings.
  *
  * @package   atto_panoptobutton
- * @copyright COPYRIGHTINFO
+ * @copyright Panopto 2009 - 2016
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -29,7 +29,7 @@ $ADMIN->add('editoratto', new admin_category('atto_panoptobutton', new lang_stri
 
 $settings = new admin_settingpage('atto_panoptobutton_settings', new lang_string('settings', 'atto_panoptobutton'));
 if ($ADMIN->fulltree) {
-    // An option setting
-    $settings->add(new admin_setting_configtext('atto_panoptobutton/defaultserver', 
+    // An option setting.
+    $settings->add(new admin_setting_configtext('atto_panoptobutton/defaultserver',
         get_string('defaultserver', 'atto_panoptobutton'), '', 'www.example.com', PARAM_TEXT));
 }

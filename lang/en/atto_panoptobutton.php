@@ -18,7 +18,7 @@
  * Strings for component 'atto_panoptobutton', language 'en'.
  *
  * @package    atto_panoptobutton
- * @copyright  COPYRIGHTINFO
+ * @copyright  Panopto 2009 - 2016
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
