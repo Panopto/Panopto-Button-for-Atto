@@ -71,7 +71,7 @@ var COMPONENTNAME = 'atto_panoptobutton',
             courseid = this.get('coursecontext');
 
             if (courseid) {
-                idstring = '?folderId=' + courseid;
+                idstring = '?folderID=' + courseid;
             }
 
             // Set name of button icon to be loaded.
@@ -222,9 +222,6 @@ var COMPONENTNAME = 'atto_panoptobutton',
                 eventfired = false;
 
             e.preventDefault();
-            this.getDialogue({
-                focusAfterHide: null
-            }).hide();
 
             win = document.getElementById('pageframe').contentWindow,
             message = {
@@ -257,6 +254,10 @@ var COMPONENTNAME = 'atto_panoptobutton',
                                 ids[value] +
                                 "&v=1' width='450' height='300' frameborder='0'></object><br>";
                         }
+
+                        // Hide the pop-up after we've received the selection in the "deliveryList" message.
+                        // Hiding before message is received causes exceptions in IE.
+                        parent.getDialogue({ focusAfterHide: null }).hide();
 
                         parent.editor.focus();
                         parent.get('host').insertContentAtFocusPoint(objectstring);
