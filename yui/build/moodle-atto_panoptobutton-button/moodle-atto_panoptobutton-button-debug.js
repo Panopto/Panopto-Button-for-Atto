@@ -267,9 +267,9 @@ var COMPONENTNAME = 'atto_panoptobutton',
 
                             objectstring += "<div style='position: relative;'>" +
                                 thumbnailChunk +
-                                "<div>" + "<object data='https://" + servername + '/Panopto/Pages/Embed.aspx?id=' +
+                                "<div>" + "<iframe src='https://" + servername + '/Panopto/Pages/Embed.aspx?id=' +
                                 ids[i] +
-                                "&v=1' width='450' height='300' frameborder='0'></object><br></div>" +
+                                "&v=1' width='450' height='300' frameborder='0'></iframe><br></div>" +
                                 "</div>";
                         }
 
