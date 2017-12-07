@@ -38,6 +38,7 @@ var COMPONENTNAME = 'atto_panoptobutton',
     servername = '',
     courseid = '',
     idstring = '',
+    playlistString = '?playlistsEnabled=true'
     IFSOURCE = servername + '/Panopto/Pages/Sessions/EmbeddedUpload.aspx',
     IFHEIGHT = 550,
     IFWIDTH = 1060,
@@ -69,7 +70,7 @@ var COMPONENTNAME = 'atto_panoptobutton',
             courseid = this.get('coursecontext');
 
             if (courseid) {
-                idstring = '?folderID=' + courseid;
+                idstring = '&folderID=' + courseid;
             }
 
             // Set name of button icon to be loaded.
@@ -162,12 +163,12 @@ var COMPONENTNAME = 'atto_panoptobutton',
             aservername = this.get('servename');
             if (aservername) {
                 document.getElementById('pageframe').src = 'https://' + aservername +
-                    '/Panopto/Pages/Sessions/EmbeddedUpload.aspx' + idstring;
+                    '/Panopto/Pages/Sessions/EmbeddedUpload.aspx' + playlistString + idstring;
 
                 servername = aservername;
             } else {
                 document.getElementById('pageframe').src = 'https://' + defaultserver +
-                    '/Panopto/Pages/Sessions/EmbeddedUpload.aspx' + idstring;
+                    '/Panopto/Pages/Sessions/EmbeddedUpload.aspx' + playlistString + idstring;
 
                 servername = defaultserver;
             }
@@ -192,7 +193,7 @@ var COMPONENTNAME = 'atto_panoptobutton',
                     CSS: CSS,
                     component: COMPONENTNAME,
                     clickedicon: clickedicon,
-                    isource: IFSOURCE + idstring,
+                    isource: IFSOURCE + playlistString + idstring,
                     iframeheight: IFHEIGHT,
                     iframeID: IFID,
                     submitid: SUBMITID,
@@ -236,38 +237,50 @@ var COMPONENTNAME = 'atto_panoptobutton',
                 var message,
                     objectstring,
                     thumbnailChunk,
+                    idChunk,
                     ids,
                     names,
+                    PLAYLIST_EMBED_ID = 1,
+                    VIDEO_EMBED_ID = 0,
                     i;
                 if (!eventfired) {
                     message = JSON.parse(e.data);
                     objectstring = '';
 
+
                     // Called when "Insert" is clicked. Creates HTML for embedding each selected video into the editor.
                     if (message.cmd === 'deliveryList') {
+
                         ids = message.ids;
                         names = message.names;
 
                         for (i = 0; i < ids.length; ++i) {
                             thumbnailChunk = "<div style='position: absolute; z-index: -1;'>";
 
+
+
+                            if (message.playableObjectTypes && (parseInt(message.playableObjectTypes[i]) === PLAYLIST_EMBED_ID)){
+                                idChunk = "?pid=" + ids[i];
+                            } else {
+                                idChunk = "?id=" + ids[i];
+                            }
+
                             if (typeof names[i] !== 'undefined') {
                                 thumbnailChunk += "<div width='450'><a style='max-width: 450px; display: inline-block;" +
                                     "text-overflow: ellipsis; white-space: nowrap; overflow: hidden;'" +
-                                    "href='https://" + servername + '/Panopto/Pages/Viewer.aspx?id=' + ids[i] +
+                                    "href='https://" + servername + '/Panopto/Pages/Viewer.aspx' + idChunk +
                                     "' target='_blank'>" + names[i] + "</a></div>";
                             }
 
-                            thumbnailChunk += "<a href='https://" + servername + '/Panopto/Pages/Viewer.aspx?id=' +
-                                ids[i] + "' target='_blank'>" +
+                            thumbnailChunk += "<a href='https://" + servername + '/Panopto/Pages/Viewer.aspx' +
+                                idChunk + "' target='_blank'>" +
                                 "<img width='128' height='72' src='https://" + servername + '/Panopto/PublicAPI/SessionPreviewImage?id=' +
                                 ids[i] + "'></img></a><br></div>";
 
                             objectstring += "<div style='position: relative;'>" +
                                 thumbnailChunk +
-                                "<div>" + "<object data='https://" + servername + '/Panopto/Pages/Embed.aspx?id=' +
-                                ids[i] +
-                                "&v=1' width='450' height='300' frameborder='0'></object><br></div>" +
+                                "<div>" + "<iframe src='https://" + servername + '/Panopto/Pages/Embed.aspx' +
+                                idChunk + "&v=1' width='450' height='300' frameborder='0'></iframe><br></div>" +
                                 "</div>";
                         }
 
