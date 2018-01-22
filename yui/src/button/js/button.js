@@ -280,7 +280,7 @@ var COMPONENTNAME = 'atto_panoptobutton',
                             objectstring += "<div style='position: relative;'>" +
                                 thumbnailChunk +
                                 "<div>" + "<iframe src='https://" + servername + '/Panopto/Pages/Embed.aspx' +
-                                idChunk + "&v=1' width='450' height='300' frameborder='0'></iframe><br></div>" +
+                                idChunk + "&v=1' width='450' height='300' frameborder='0' allowfullscreen></iframe><br></div>" +
                                 "</div>";
                         }
 
