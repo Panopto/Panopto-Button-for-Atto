@@ -40,8 +40,8 @@ var COMPONENTNAME = 'atto_panoptobutton',
     servername = '',
     courseid = '',
     idstring = '',
-    playlistString = '?playlistsEnabled=true'
-    IFSOURCE = servername + '/Panopto/Pages/Sessions/EmbeddedUpload.aspx',
+    playlistString = '?playlistsEnabled=true',
+    IFSOURCE = '',
     IFHEIGHT = 550,
     IFWIDTH = 1060,
     IFID = 'pageframe',
@@ -163,17 +163,12 @@ var COMPONENTNAME = 'atto_panoptobutton',
             dialogue.set('bodyContent', bodycontent);
 
             aservername = this.get('servename');
-            if (aservername) {
-                document.getElementById('pageframe').src = 'https://' + aservername +
+
+            servername = aservername ? aservername : defaultserver;
+            IFSOURCE = 'https://' + servername +
                     '/Panopto/Pages/Sessions/EmbeddedUpload.aspx' + playlistString + idstring;
 
-                servername = aservername;
-            } else {
-                document.getElementById('pageframe').src = 'https://' + defaultserver +
-                    '/Panopto/Pages/Sessions/EmbeddedUpload.aspx' + playlistString + idstring;
-
-                servername = defaultserver;
-            }
+            document.getElementById('pageframe').src = IFSOURCE;
 
             dialogue.show();
 
@@ -189,13 +184,25 @@ var COMPONENTNAME = 'atto_panoptobutton',
          * @private
          */
         _getFormContent: function (clickedicon) {
-            var template = Y.Handlebars.compile(TEMPLATE),
-                content = Y.Node.create(template({
+            var template,
+                content,
+                defaultserver,
+                aservername;
+
+            defaultserver = this.get('defaultserver');
+            aservername = this.get('servename');
+
+            servername = aservername ? aservername : defaultserver;
+            IFSOURCE = 'https://' + servername +
+                    '/Panopto/Pages/Sessions/EmbeddedUpload.aspx' + playlistString + idstring;
+
+            template = Y.Handlebars.compile(TEMPLATE);
+            content = Y.Node.create(template({
                     elementid: this.get('host').get('elementid'),
                     CSS: CSS,
                     component: COMPONENTNAME,
                     clickedicon: clickedicon,
-                    isource: IFSOURCE + playlistString + idstring,
+                    isource: IFSOURCE,
                     iframeheight: IFHEIGHT,
                     iframeID: IFID,
                     submitid: SUBMITID,
@@ -224,10 +231,11 @@ var COMPONENTNAME = 'atto_panoptobutton',
 
             e.preventDefault();
 
-            win = document.getElementById('pageframe').contentWindow,
+            win = document.getElementById('pageframe').contentWindow;
             message = {
                 cmd: 'createEmbeddedFrame'
             };
+
             win.postMessage(JSON.stringify(message), 'https://' + servername);
 
             eventmethod = window.addEventListener ? 'addEventListener' : 'attachEvent';
@@ -243,7 +251,6 @@ var COMPONENTNAME = 'atto_panoptobutton',
                     ids,
                     names,
                     PLAYLIST_EMBED_ID = 1,
-                    VIDEO_EMBED_ID = 0,
                     i;
                 if (!eventfired) {
                     message = JSON.parse(e.data);
