@@ -24,7 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-
 /**
  * Initialize this plugin
  */
@@ -47,16 +46,25 @@ function atto_panoptobutton_strings_for_js() {
  * @return array of additional params to pass to javascript init function for this module.
  */
 function atto_panoptobutton_params_for_js($elementid, $options, $fpoptions) {
-
     global $USER, $COURSE, $DB;
 
     $coursecontext = context_course::instance($COURSE->id);
 
     // Gets Panopto folder ID and for course from database on the server to which the course was provisioned.
     // If the course has not been provisioned, this will not return a value and the user will be able to select
-    // Folders and videos from the server specified as default during the plugin setup.
+    //  folders and videos from the server specified as default during the plugin setup.
     $panoptoid = $DB->get_field('block_panopto_foldermap', 'panopto_id', array('moodleid' => $coursecontext->instanceid));
     $servername = $DB->get_field('block_panopto_foldermap', 'panopto_server', array('moodleid' => $coursecontext->instanceid));
+
+    // If the panopto_data file exists (it should, this plug in should not be installed without the base plug-in), 
+    //   sync the user before viewing the tool.
+    if (file_exists(dirname(__FILE__) . '/../../../../../blocks/panopto/lib/panopto_data.php')) {
+        require_once(dirname(__FILE__) . '/../../../../../blocks/panopto/lib/panopto_data.php');
+        $panoptodata = new \panopto_data($COURSE->id);
+        if (!empty($panoptodata->servername) && !empty($panoptodata->applicationkey)) {
+            $panoptodata->sync_external_user($USER->id);
+        }
+    }
 
     $usercontextid = context_user::instance($USER->id)->id;
     $disabled = false;
