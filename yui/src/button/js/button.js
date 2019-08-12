@@ -37,7 +37,9 @@
 var COMPONENTNAME = 'atto_panoptobutton',
     servername = '',
     courseid = '',
+    instancename = '',
     idstring = '',
+    instancestring = '',
     playlistString = '?playlistsEnabled=true',
     IFSOURCE = '',
     IFHEIGHT = 550,
@@ -66,11 +68,18 @@ var COMPONENTNAME = 'atto_panoptobutton',
                 return;
             }
 
-            // Get the external id of the course, and if it exists, append to the url for the iframe.
+            // Get the external id of the course, and if it exists append to the url for the iframe.
             courseid = this.get('coursecontext');
 
             if (courseid) {
                 idstring = '&folderID=' + courseid;
+            }
+
+            // Get the instance name of the base plug-in, if it exists append it to the url for the iframe
+            instancename = this.get('instancename');
+
+            if (instancename) {
+                instancestring = '&instance=' + instancename;
             }
 
             // Set name of button icon to be loaded.
@@ -164,7 +173,7 @@ var COMPONENTNAME = 'atto_panoptobutton',
 
             servername = aservername ? aservername : defaultserver;
             IFSOURCE = 'https://' + servername +
-                    '/Panopto/Pages/Sessions/EmbeddedUpload.aspx' + playlistString + idstring;
+                    '/Panopto/Pages/Sessions/EmbeddedUpload.aspx' + playlistString + instancestring + idstring;
 
             document.getElementById('pageframe').src = IFSOURCE;
 
@@ -192,7 +201,7 @@ var COMPONENTNAME = 'atto_panoptobutton',
 
             servername = aservername ? aservername : defaultserver;
             IFSOURCE = 'https://' + servername +
-                    '/Panopto/Pages/Sessions/EmbeddedUpload.aspx' + playlistString + idstring;
+                    '/Panopto/Pages/Sessions/EmbeddedUpload.aspx' + playlistString + instancestring + idstring;
 
             template = Y.Handlebars.compile(TEMPLATE);
             content = Y.Node.create(template({
@@ -321,6 +330,9 @@ var COMPONENTNAME = 'atto_panoptobutton',
                 value: ''
             },
             coursecontext: {
+                value: null
+            },
+            instancename: {
                 value: null
             },
             servename: {
