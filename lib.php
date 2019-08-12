@@ -55,6 +55,7 @@ function atto_panoptobutton_params_for_js($elementid, $options, $fpoptions) {
     //  folders and videos from the server specified as default during the plugin setup.
     $panoptoid = $DB->get_field('block_panopto_foldermap', 'panopto_id', array('moodleid' => $coursecontext->instanceid));
     $servername = $DB->get_field('block_panopto_foldermap', 'panopto_server', array('moodleid' => $coursecontext->instanceid));
+    $instancename = get_config('block_panopto', 'instance_name');
 
     // If the panopto_data file exists (it should, this plug in should not be installed without the base plug-in), 
     //   sync the user before viewing the tool.
@@ -74,6 +75,8 @@ function atto_panoptobutton_params_for_js($elementid, $options, $fpoptions) {
     $params['usercontextid'] = $usercontextid;
     $params['coursecontext'] = $panoptoid;
     $params['servename'] = $servername;
+
+    $params['instancename'] = $instancename;
 
     // If they don't have permission don't show it.
     if (!has_capability('atto/panoptobutton:visible', $coursecontext) ) {
