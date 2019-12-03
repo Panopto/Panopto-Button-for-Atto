@@ -32,4 +32,4 @@ $string['insert'] = 'Insert';
 $string['cancel'] = 'Cancel';
 $string['defaultserver'] = 'Default server for retrieving videos (used when not in a provisioned course)';
 $string['panoptobutton:visible'] = 'Visible';
-$string['privacy:metadata'] = '';
+$string['privacy:metadata'] = 'No user data is stored by this plugin';
