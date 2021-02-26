@@ -290,7 +290,8 @@ var COMPONENTNAME = 'atto_panoptobutton',
 
                             thumbnailChunk += "<a href='https://" + servername + '/Panopto/Pages/Viewer.aspx' +
                                 idChunk + "' target='_blank'>" +
-                                "<img width='128' height='72' src='https://" + servername + '/Panopto/PublicAPI/SessionPreviewImage?id=' +
+                                "<img width='128' height='72' src='https://" +
+                                servername + '/Panopto/PublicAPI/SessionPreviewImage?id=' +
                                 ids[i] + "'></img></a><br></div>";
 
                             objectstring += "<div style='position: relative;'>" +
