@@ -271,9 +271,10 @@ var COMPONENTNAME = 'atto_panoptobutton',
                         names = message.names;
 
                         for (i = 0; i < ids.length; ++i) {
+                            var sessionWidth = message.width[i] === null ? 450 : message.width[i],
+                                sessionHeight =  message.height[i] === null ? 300 : message.height[i];
+                                
                             thumbnailChunk = "<div style='position: absolute; z-index: -1;'>";
-
-
 
                             if (message.playableObjectTypes && (parseInt(message.playableObjectTypes[i]) === PLAYLIST_EMBED_ID)){
                                 idChunk = "?pid=" + ids[i];
@@ -282,9 +283,10 @@ var COMPONENTNAME = 'atto_panoptobutton',
                             }
 
                             if (typeof names[i] !== 'undefined') {
-                                thumbnailChunk += "<div width='450'><a style='max-width: 450px; display: inline-block;" +
+                                thumbnailChunk += "<div width='" + sessionWidth + "'>" +
+                                    "<a style='max-width: " + sessionWidth + "px; display: inline-block;" +
                                     "text-overflow: ellipsis; white-space: nowrap; overflow: hidden;'" +
-                                    "href='https://" + servername + '/Panopto/Pages/Viewer.aspx' + idChunk +
+                                    "href='https://" + servername + '/Panopto/Pages/Viewer.aspx' + idChunk + instancestring + 
                                     "' target='_blank'>" + names[i] + "</a></div>";
                             }
 
@@ -296,8 +298,8 @@ var COMPONENTNAME = 'atto_panoptobutton',
                             objectstring += "<div style='position: relative;'>" +
                                 thumbnailChunk +
                                 "<div>" + "<iframe src='https://" + servername + '/Panopto/Pages/Embed.aspx' +
-                                idChunk + "&v=1' width='450' height='300' frameborder='0' allowfullscreen></iframe><br></div>" +
-                                "</div>";
+                                idChunk + instancestring + "&v=1' width='" + sessionWidth + "' height='" + sessionHeight + 
+                                "' frameborder='0' allowfullscreen></iframe><br></div>" + "</div>";
                         }
 
                         // Hide the pop-up after we've received the selection in the "deliveryList" message.

@@ -57,16 +57,6 @@ function atto_panoptobutton_params_for_js($elementid, $options, $fpoptions) {
     $servername = $DB->get_field('block_panopto_foldermap', 'panopto_server', array('moodleid' => $coursecontext->instanceid));
     $instancename = get_config('block_panopto', 'instance_name');
 
-    // If the panopto_data file exists (it should, this plug in should not be installed without the base plug-in), 
-    //   sync the user before viewing the tool.
-    if (file_exists(dirname(__FILE__) . '/../../../../../blocks/panopto/lib/panopto_data.php')) {
-        require_once(dirname(__FILE__) . '/../../../../../blocks/panopto/lib/panopto_data.php');
-        $panoptodata = new \panopto_data($COURSE->id);
-        if (!empty($panoptodata->servername) && !empty($panoptodata->applicationkey)) {
-            $panoptodata->sync_external_user($USER->id);
-        }
-    }
-
     $usercontextid = context_user::instance($USER->id)->id;
     $disabled = false;
 
