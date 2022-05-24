@@ -273,7 +273,7 @@ var COMPONENTNAME = 'atto_panoptobutton',
                         for (i = 0; i < ids.length; ++i) {
                             var sessionWidth = message.width[i] === null ? 450 : message.width[i],
                                 sessionHeight =  message.height[i] === null ? 300 : message.height[i];
-                                
+
                             thumbnailChunk = "<div style='position: absolute; z-index: -1;'>";
 
                             if (message.playableObjectTypes && (parseInt(message.playableObjectTypes[i]) === PLAYLIST_EMBED_ID)){
@@ -286,19 +286,19 @@ var COMPONENTNAME = 'atto_panoptobutton',
                                 thumbnailChunk += "<div width='" + sessionWidth + "'>" +
                                     "<a style='max-width: " + sessionWidth + "px; display: inline-block;" +
                                     "text-overflow: ellipsis; white-space: nowrap; overflow: hidden;'" +
-                                    "href='https://" + servername + '/Panopto/Pages/Viewer.aspx' + idChunk + instancestring + 
+                                    "href='https://" + servername + '/Panopto/Pages/Viewer.aspx' + idChunk + instancestring +
                                     "' target='_blank'>" + names[i] + "</a></div>";
                             }
 
                             thumbnailChunk += "<a href='https://" + servername + '/Panopto/Pages/Viewer.aspx' +
                                 idChunk + "' target='_blank'>" +
-                                "<img width='128' height='72' src='https://" + servername + '/Panopto/PublicAPI/SessionPreviewImage?id=' +
+                                "<img width='128' height='72' alt='" + names[i] + "' src='https://" + servername + '/Panopto/PublicAPI/SessionPreviewImage?id=' +
                                 ids[i] + "'></img></a><br></div>";
 
                             objectstring += "<div style='position: relative;'>" +
                                 thumbnailChunk +
                                 "<div>" + "<iframe src='https://" + servername + '/Panopto/Pages/Embed.aspx' +
-                                idChunk + instancestring + "&v=1' width='" + sessionWidth + "' height='" + sessionHeight + 
+                                idChunk + instancestring + "&v=1' width='" + sessionWidth + "' height='" + sessionHeight +
                                 "' frameborder='0' allowfullscreen></iframe><br></div>" + "</div>";
                         }
 
