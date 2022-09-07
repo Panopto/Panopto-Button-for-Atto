@@ -25,9 +25,9 @@
 defined('MOODLE_INTERNAL') || die();
 
 // The current plugin version (Date: YYYYMMDDXX).
-$plugin->version   = 2022070700;
+$plugin->version   = 2022090700;
 
-// Requires this Moodle version - 2.7.
+// Requires this Moodle version
 $plugin->requires  = 2014051200;
 
 // Full name of the plugin (used for diagnostics).
@@ -35,3 +35,8 @@ $plugin->component = 'atto_panoptobutton';
 
 // This is considered as ready for production sites.
 $plugin->maturity  = MATURITY_STABLE;
+
+// Dependencies.
+$plugin->dependencies = array(
+    'block_panopto' => ANY_VERSION
+);
